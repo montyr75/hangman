@@ -1,0 +1,46 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+#main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+#main > * {
+  margin: 10px;
+}
+
+#gallows {
+  max-width: 300px;
+}
+
+#word {
+  letter-spacing: .3rem;
+  font-size: 2rem;
+}
+
+#letters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.letter-btn {
+  width: 35px;
+  height: 35px;
+  margin-top: 5px;
+}

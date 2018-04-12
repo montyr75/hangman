@@ -1,0 +1,12 @@
+#############
+## Dart
+#############
+
+.idea/
+build/
+pubspec.lock
+.buildlog
+.pub/
+.packages
+.project
+.dart_tool
