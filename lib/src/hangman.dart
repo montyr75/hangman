@@ -47,6 +47,8 @@ class HangmanGame {
     // store guessed letter
     lettersGuessed.add(letter);
 
+    // if the guessed letter is present in the word, check for a win
+    // otherwise, check for player death
     if (wordToGuess.contains(letter)) {
       _onRight.add(letter);
 
@@ -73,6 +75,7 @@ class HangmanGame {
   String get wordForDisplay => wordToGuess.map((String letter) => lettersGuessed.contains(letter) ? letter : "_").join();
   String get fullWord => wordToGuess.join();
 
+  // check to see if every letter in the word has been guessed
   bool get isWordComplete {
     for (String letter in wordToGuess) {
       if (!lettersGuessed.contains(letter)) {
