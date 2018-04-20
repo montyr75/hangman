@@ -4,16 +4,16 @@ class HangmanGame {
   static const int hanged = 7;			// number of wrong guesses before the player's demise
 
   final List<String> wordList;			// list of possible words to guess
-
-  List<String> wordToGuess;
   final Set<String> lettersGuessed = new Set<String>();
-  int wrongGuesses;
 
-  StreamController _onWin = new StreamController.broadcast();
-  Stream get onWin => _onWin.stream;
+  List<String> _wordToGuess;
+  int _wrongGuesses;
 
-  StreamController _onLose = new StreamController.broadcast();
-  Stream get onLose => _onLose.stream;
+  StreamController<Null> _onWin = new StreamController<Null>.broadcast();
+  Stream<Null> get onWin => _onWin.stream;
+
+  StreamController<Null> _onLose = new StreamController<Null>.broadcast();
+  Stream<Null> get onLose => _onLose.stream;
 
   StreamController<int> _onWrong = new StreamController<int>.broadcast();
   Stream<int> get onWrong => _onWrong.stream;
@@ -27,16 +27,16 @@ class HangmanGame {
   HangmanGame(List<String> words) : wordList = new List<String>.from(words);
 
   void newGame() {
-    // shuffle the word list
+    // shuffle the word list into a random order
     wordList.shuffle();
 
-    // grab the first word from the shuffled list and break it into a list of letters
-    wordToGuess = wordList.first.split('');
+    // break the first word from the shuffled list into a list of letters
+    _wordToGuess = wordList.first.split('');
 
-    // reset wrong guess count
-    wrongGuesses = 0;
+    // reset the wrong guess count
+    _wrongGuesses = 0;
 
-    // clear the list of guessed letters
+    // clear the set of guessed letters
     lettersGuessed.clear();
 
     // declare the change (new word)
@@ -49,7 +49,7 @@ class HangmanGame {
 
     // if the guessed letter is present in the word, check for a win
     // otherwise, check for player death
-    if (wordToGuess.contains(letter)) {
+    if (_wordToGuess.contains(letter)) {
       _onRight.add(letter);
 
       if (isWordComplete) {
@@ -61,23 +61,27 @@ class HangmanGame {
       }
     }
     else {
-      wrongGuesses++;
+      _wrongGuesses++;
 
-      _onWrong.add(wrongGuesses);
+      _onWrong.add(_wrongGuesses);
 
-      if (wrongGuesses == hanged) {
+      if (_wrongGuesses == hanged) {
         _onChange.add(fullWord);
         _onLose.add(null);
       }
     }
   }
 
-  String get wordForDisplay => wordToGuess.map((String letter) => lettersGuessed.contains(letter) ? letter : "_").join();
+  int get wrongGuesses => _wrongGuesses;
+  List<String> get wordToGuess => _wordToGuess;
   String get fullWord => wordToGuess.join();
+
+  String get wordForDisplay => wordToGuess.map((String letter) =>
+    lettersGuessed.contains(letter) ? letter : "_").join();
 
   // check to see if every letter in the word has been guessed
   bool get isWordComplete {
-    for (String letter in wordToGuess) {
+    for (String letter in _wordToGuess) {
       if (!lettersGuessed.contains(letter)) {
         return false;
       }

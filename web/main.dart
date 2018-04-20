@@ -17,8 +17,6 @@ const List<String> imageList = const [
 
 const String winImage = "https://i.imgur.com/QYKuNwB.png";
 
-final List<String> alphabet = generateAlphabet();
-
 HangmanGame game = new HangmanGame(wordList);
 
 void main() {
@@ -70,14 +68,13 @@ void gameOver([_]) {
 
 void createLetterButtons() {
   // add letter buttons to the DOM
-  alphabet.forEach((String letter) {
+  generateAlphabet().forEach((String letter) {
     lettersRef.append(new ButtonElement()
       ..classes.add("letter-btn")
       ..text = letter
       ..onClick.listen((MouseEvent event) {
-        ButtonElement clickedBtn = event.target as ButtonElement;
-        clickedBtn.disabled = true;
-        game.guessLetter(clickedBtn.text);
+        (event.target as ButtonElement).disabled = true;
+        game.guessLetter(letter);
       })
     );
   });
