@@ -1,8 +1,7 @@
 import 'dart:html';
 
+import 'package:english_words/english_words.dart' as engWords;
 import 'package:hangman/src/hangman.dart';
-
-const List<String> wordList = const ["PLENTY","ACHIEVE","CLASS","STARE","AFFECT","THICK","CARRIER","BILL","SAY","ARGUE","OFTEN","GROW","VOTING","SHUT","PUSH","FANTASY","PLAN","LAST","ATTACK","COIN","ONE","STEM","SCAN","ENHANCE","PILL","OPPOSED","FLAG","RACE","SPEED","BIAS","HERSELF","DOUGH","RELEASE","SUBJECT","BRICK","SURVIVE","LEADING","STAKE","NERVE","INTENSE","SUSPECT","WHEN","LIE","PLUNGE","HOLD","TONGUE","ROLLING","STAY","RESPECT","SAFELY"];
 
 const List<String> imageList = const [
   "https://i.imgur.com/kReMv94.png",
@@ -16,6 +15,9 @@ const List<String> imageList = const [
 ];
 
 const String winImage = "https://i.imgur.com/QYKuNwB.png";
+
+//const List<String> wordList = const ["PLENTY","ACHIEVE","CLASS","STARE","AFFECT","THICK","CARRIER","BILL","SAY","ARGUE","OFTEN","GROW","VOTING","SHUT","PUSH","FANTASY","PLAN","LAST","ATTACK","COIN","ONE","STEM","SCAN","ENHANCE","PILL","OPPOSED","FLAG","RACE","SPEED","BIAS","HERSELF","DOUGH","RELEASE","SUBJECT","BRICK","SURVIVE","LEADING","STAKE","NERVE","INTENSE","SUSPECT","WHEN","LIE","PLUNGE","HOLD","TONGUE","ROLLING","STAY","RESPECT","SAFELY"];
+final List<String> wordList = engWords.all.where((String word) => word.length > 2 && word.length < 8).map((String word) => word.toUpperCase()).toList();
 
 HangmanGame game = new HangmanGame(wordList);
 
